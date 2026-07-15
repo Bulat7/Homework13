@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Main {
     public static void main(String[] args) {
         Product pixel7 = new Product(1, "Google Pixel 7", 30000, "phone");
@@ -25,7 +28,88 @@ public class Main {
         System.out.println(secondOrder);
 
         System.out.println(firstOrder.equals(secondOrder));
+
+
     }
+
+
 }
+
+class Product {
+    public int id;
+    public String name;
+    public int price;
+    public String category;
+
+
+    public Product (int id, String name, int price, String category) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Товар [артикул = " + id + ", название = " + name + ", цена = " + price + ", категория = " + category + "]";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Product product = (Product) obj;
+        return id == product.id && Objects.equals(category, product.category);
+    }
+
+
+}
+
+class Order {
+    public String customer;
+    public Product[] basket;
+    public int count = 0;
+
+    public Order (String customer, int orders){
+        this.customer = customer;
+        this.basket = new Product[orders];
+    }
+
+    public void addProduct(Product newProduct) {
+        if(count<basket.length) {
+            basket[count] = newProduct;
+            count++;
+        }
+    }
+
+    @Override
+    public String toString(){
+
+        return "В корзине покупателя " + customer + " находятся - " + Arrays.toString(basket) + ". ";
+
+
+    }
+
+    public void printOrders() {
+        System.out.println(Arrays.toString(basket));
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this == object) return true;
+        if(object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Order order = (Order) object;
+        return customer == order.customer && Arrays.equals(basket, order.basket);
+    }
+
+
+}
+
+
+
 
 
