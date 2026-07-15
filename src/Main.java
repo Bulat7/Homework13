@@ -24,10 +24,14 @@ public class Main {
         Order secondOrder = new Order("Anna", 1);
         secondOrder.addProduct(pixelBuds);
 
+        Order therdOrder = new Order("Anna", 1);
+        therdOrder.addProduct(pixelBuds);
+
         System.out.println(firstOrder);
         System.out.println(secondOrder);
 
         System.out.println(firstOrder.equals(secondOrder));
+        System.out.println(secondOrder.equals(therdOrder));
 
 
     }
@@ -87,7 +91,7 @@ class Order {
     @Override
     public String toString(){
 
-        return "В корзине покупателя " + customer + " находятся - " + Arrays.toString(basket) + ". ";
+        return "В корзине покупателя " + customer + " находятся -" + Arrays.toString(basket) + ".";
 
 
     }
@@ -103,7 +107,25 @@ class Order {
             return false;
         }
         Order order = (Order) object;
-        return customer == order.customer && Arrays.equals(basket, order.basket);
+        return Objects.equals(customer, order.customer) && basketEqual(this.basket, order.basket);
+    }
+
+    public boolean basketEqual(Product[] basket1, Product[] basket2) {
+        if(basket1==basket2) return true;
+        if(basket1 == null || basket2 == null) return false;
+        if(basket1.length != basket2.length) return false;
+
+        for (int i = 0; i <basket1.length; i++) {
+            Product p1 = basket1[i];
+            Product p2 = basket2[i];
+
+            if (p1==null) {
+                if (p2 != null) return false;
+            } else if (!p1.equals(p2)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
